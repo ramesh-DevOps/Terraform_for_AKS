@@ -1,0 +1,42 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+variables:
+  terraformVersion: '1.4.6'  # Specify the Terraform version you want to use
+  workingDirectory: 'terraform'  # Path to your Terraform configuration files
+
+jobs:
+- job: Terraform
+  pool:
+    vmImage: 'ubuntu-latest'  # Use an Ubuntu-based VM
+
+  steps:
+  - task: UseTerraform@0
+    inputs:
+      versionSpec: $(terraformVersion)
+    displayName: 'Install Terraform'
+
+  - checkout: self
+    displayName: 'Checkout code'
+
+  - script: |
+      terraform init
+    workingDirectory: $(workingDirectory)
+    displayName: 'Terraform Init'
+
+  - script: |
+      terraform plan -out=tfplan
+    workingDirectory: $(workingDirectory)
+    displayName: 'Terraform Plan'
+
+  - script: |
+      terraform apply -auto-approve tfplan
+    workingDirectory: $(workingDirectory)
+    displayName: 'Terraform Apply'
+
+
