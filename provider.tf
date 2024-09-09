@@ -9,5 +9,5 @@ provider "azurerm" {
   features {}
 
   # Specify the subscription ID
-  subscription_id = $(azureServiceConnection)
+  subscription_id = $(ARM_SUBSCRIPTION_ID)
 }
