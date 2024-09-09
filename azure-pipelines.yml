@@ -1,14 +1,10 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+- main  # or any branch you want to trigger the pipeline
 
 variables:
   terraformVersion: '1.4.6'  # Specify the Terraform version you want to use
   workingDirectory: 'terraform'  # Path to your Terraform configuration files
+  azureServiceConnection: 'SC_for_Terraform_Ramesh'  # Name of your Azure Service Connection
 
 jobs:
 - job: Terraform
@@ -24,19 +20,9 @@ jobs:
   - checkout: self
     displayName: 'Checkout code'
 
-  - script: |
-      terraform init
-    workingDirectory: $(workingDirectory)
-    displayName: 'Terraform Init'
-
-  - script: |
-      terraform plan -out=tfplan
-    workingDirectory: $(workingDirectory)
-    displayName: 'Terraform Plan'
-
-  - script: |
-      terraform apply -auto-approve tfplan
-    workingDirectory: $(workingDirectory)
-    displayName: 'Terraform Apply'
-
-
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: $(azureServiceConnection)
+      scriptType: bash
+      scriptPath: $(System.DefaultWorkingDirectory)/path/to/your/script.sh
+    displayName: 'Authenticate with Azure and Run Terraform'
