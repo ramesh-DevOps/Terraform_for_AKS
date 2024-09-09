@@ -29,8 +29,8 @@ jobs:
       terraform plan -out=tfplan
 
       # Apply the plan
-      terraform apply -auto-approve tfplan
-    displayName: 'Run Terraform Apply'
+    # terraform apply -auto-approve tfplan
+  # displayName: 'Run Terraform Apply'
     env:
       ARM_CLIENT_ID: $(ARM_CLIENT_ID)
       ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
