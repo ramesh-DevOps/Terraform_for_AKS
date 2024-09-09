@@ -36,11 +36,16 @@ jobs:
       ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
       ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
       ARM_TENANT_ID: $(ARM_TENANT_ID)
-
-      # destroy Resources
+      
+  - script: |
+      # Optionally destroy Terraform resources
       terraform destroy -auto-approve
     displayName: 'Run Terraform Destroy'
-    
+    env:
+      ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+      ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+      ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+      ARM_TENANT_ID: $(ARM_TENANT_ID)  
     
 
 #  - task: AzureCLI@2
