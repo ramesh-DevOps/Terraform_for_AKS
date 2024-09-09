@@ -27,5 +27,5 @@ jobs:
     inputs:
       azureSubscription: $(azureServiceConnection)
       scriptType: bash
-      scriptPath: $(System.DefaultWorkingDirectory)/path/to/your/script.sh
+      scriptPath: script.sh
     displayName: 'Authenticate with Azure and Run Terraform'
