@@ -4,7 +4,7 @@ trigger:
 variables:
   terraformVersion: '1.4.6'  # Specify the Terraform version you want to use
   workingDirectory: 'terraform'  # Path to your Terraform configuration files
-  azureServiceConnection: 'SC_for_Terraform_Ramesh'  # Name of your Azure Service Connection
+  azureServiceConnection: 'Ramesh_Terraform_SC'  # Name of your Azure Service Connection
 
 jobs:
 - job: Terraform
