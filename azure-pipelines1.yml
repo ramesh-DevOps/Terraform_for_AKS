@@ -1,0 +1,34 @@
+trigger:
+- main  # or any branch you want to trigger the pipeline
+
+variables:
+  - group: Terraform_values  # Replace with the name of your Variable Group
+
+jobs:
+- job: Terraform
+  pool:
+    vmImage: 'ubuntu-latest'  # Use an Ubuntu-based VM
+
+  steps:
+  - script: |
+      # Install Terraform
+      curl -LO https://releases.hashicorp.com/terraform/$(terraformVersion)/terraform_$(terraformVersion)_linux_amd64.zip
+      unzip terraform_$(terraformVersion)_linux_amd64.zip
+      sudo mv terraform /usr/local/bin/
+      terraform --version
+    displayName: 'Install Terraform'
+
+  - checkout: self
+    displayName: 'Checkout code'
+
+  - script: |
+      terraform destroy -auto-approve
+    displayName: 'Run Terraform Destroy'
+    env:
+      ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+      ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+      ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+      ARM_TENANT_ID: $(ARM_TENANT_ID)
+    
+
+
