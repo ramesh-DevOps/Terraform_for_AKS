@@ -5,8 +5,6 @@ variables:
   terraformVersion: '1.4.6'  # Specify the Terraform version you want to use
   workingDirectory: 'terraform'  # Path to your Terraform configuration files
   azureServiceConnection: 'Ramesh_Terraform_SC'  # Name of your Azure Service Connection
-
-variables:
   - group: Terraform_values  # Replace with the name of your Variable Group
 
 jobs:
