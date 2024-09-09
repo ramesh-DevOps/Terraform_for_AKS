@@ -16,15 +16,32 @@ jobs:
       unzip terraform_$(terraformVersion)_linux_amd64.zip
       sudo mv terraform /usr/local/bin/
       terraform --version
-      export ARM_SUBSCRIPTION_ID=$(subscription_id)
     displayName: 'Install Terraform'
 
   - checkout: self
     displayName: 'Checkout code'
 
-  - task: AzureCLI@2
-    inputs:
-      azureSubscription: $(azureServiceConnection)
-      scriptType: bash
-      scriptPath: script.sh
-    displayName: 'Authenticate with Azure and Run Terraform'
+  - script: |
+      # Initialize Terraform
+      terraform init
+
+      # Create a plan file
+      terraform plan -out=tfplan
+
+      # Apply the plan
+      terraform apply -auto-approve tfplan
+    workingDirectory: $(workingDirectory)
+    displayName: 'Run Terraform Apply'
+    env:
+      ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+      ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+      ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+      ARM_TENANT_ID: $(ARM_TENANT_ID)
+    
+
+#  - task: AzureCLI@2
+#   inputs:
+#      azureSubscription: $(azureServiceConnection)
+#      scriptType: bash
+#   scriptPath: script.sh
+#displayName: 'Authenticate with Azure and Run Terraform'
