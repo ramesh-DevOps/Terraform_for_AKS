@@ -7,4 +7,7 @@ terraform {
 }
 provider "azurerm" {
   features {}
+
+  # Specify the subscription ID
+  subscription_id = $(azureServiceConnection)
 }
