@@ -30,7 +30,6 @@ jobs:
 
       # Apply the plan
       terraform apply -auto-approve tfplan
-    workingDirectory: $(workingDirectory)
     displayName: 'Run Terraform Apply'
     env:
       ARM_CLIENT_ID: $(ARM_CLIENT_ID)
