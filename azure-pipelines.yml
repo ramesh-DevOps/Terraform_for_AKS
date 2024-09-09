@@ -12,9 +12,12 @@ jobs:
     vmImage: 'ubuntu-latest'  # Use an Ubuntu-based VM
 
   steps:
-  - task: UseTerraform@0
-    inputs:
-      versionSpec: $(terraformVersion)
+  - script: |
+      # Install Terraform
+      curl -LO https://releases.hashicorp.com/terraform/$(terraformVersion)/terraform_$(terraformVersion)_linux_amd64.zip
+      unzip terraform_$(terraformVersion)_linux_amd64.zip
+      sudo mv terraform /usr/local/bin/
+      terraform --version
     displayName: 'Install Terraform'
 
   - checkout: self
