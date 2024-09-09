@@ -8,6 +8,4 @@ terraform {
 provider "azurerm" {
   features {}
 
-  # Specify the subscription ID
-  subscription_id = var.ARM_SUBSCRIPTION_ID
 }
